@@ -29,3 +29,7 @@ dotnet add .\BuberDinner.Infrastructure\ reference .\BuberDinner.Application\
 dotnet add .\BuberDinner.Application\ reference .\BuberDinner.Domain\
 
 dotnet add .\BuberDinner.Api\ reference .\BuberDinner.Infrastructure\
+
+### Run Api project
+
+dotnet run --project .\BuberDinner.Api\
