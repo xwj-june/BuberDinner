@@ -6,9 +6,9 @@ using ErrorOr;
 
 namespace BuberDinner.Api.Controllers;
 
-[ApiController]
+
 [Route("auth")]
-public class AuthenticationController : ControllerBase
+public class AuthenticationController : ApiController
 {
     private readonly IAuthenticationService _authenticationService;
     public AuthenticationController(IAuthenticationService authenticationService)
@@ -26,9 +26,9 @@ public class AuthenticationController : ControllerBase
             request.Password
         );
 
-        return authResult.MatchFirst(
+        return authResult.Match(
             authResult => Ok(MapAuthResult(authResult)),
-            firstError => Problem(statusCode: StatusCodes.Status409Conflict, title: firstError.Description)
+            errors => Problem(errors)
         );
     }
 
@@ -40,15 +40,10 @@ public class AuthenticationController : ControllerBase
             request.Password
         );
 
-        var response = new AuthenticationResponse(
-            authResult.User.Id,
-            authResult.User.FirstName,
-            authResult.User.LastName,
-            authResult.User.Email,
-            authResult.Token
+        return authResult.Match(
+            authResult => Ok(MapAuthResult(authResult)),
+            errors => Problem(errors)
         );
-
-        return Ok(response);
     }
 
     private static AuthenticationResponse MapAuthResult(AuthenticationResult authResult)
