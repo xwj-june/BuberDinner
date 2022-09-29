@@ -8,12 +8,12 @@ using BuberDinner.Application.Authentication.Common;
 
 namespace BuberDinner.Application.Authentication.Queries.Login;
 
-public class RegisterCommandHandler : IRequestHandler<LoginQuery, ErrorOr<AuthenticationResult>>
+public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<AuthenticationResult>>
 {
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
     private readonly IUserRepository _userRepository;
 
-    public RegisterCommandHandler(IUserRepository userRepository, IJwtTokenGenerator jwtTokenGenerator)
+    public LoginQueryHandler(IUserRepository userRepository, IJwtTokenGenerator jwtTokenGenerator)
     {
         _userRepository = userRepository;
         _jwtTokenGenerator = jwtTokenGenerator;
@@ -21,6 +21,7 @@ public class RegisterCommandHandler : IRequestHandler<LoginQuery, ErrorOr<Authen
 
     public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery query, CancellationToken cancellationToken)
     {
+        await Task.CompletedTask;
          // Check if user exists
         if (_userRepository.GetUserByEmail(query.Email) is not User user)
         {
