@@ -1,0 +1,4 @@
+@host = https://localhost:7015
+
+GET {{host}}/dinner
+Authorization: Bearer header.payload.hash
